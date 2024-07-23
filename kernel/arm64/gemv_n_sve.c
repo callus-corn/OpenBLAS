@@ -37,13 +37,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SV_COUNT svcntd
 #define SV_TYPE svfloat64_t
 #define SV_TRUE svptrue_b64
-#define SV_WHILE(A, B) svwhilelt_b64((BLASLONG)A, (BLASLONG)B)
+#define SV_WHILE svwhilelt_b64
 #define SV_DUP svdup_f64
 #else
 #define SV_COUNT svcntw
 #define SV_TYPE svfloat32_t
 #define SV_TRUE svptrue_b32
-#define SV_WHILE(A, B) svwhilelt_b32((BLASLONG)A, (BLASLONG)B)
+#define SV_WHILE svwhilelt_b32
 #define SV_DUP svdup_f32
 #endif
 
@@ -54,6 +54,9 @@ int CNAME(BLASLONG m, BLASLONG n, BLASLONG dummy1, FLOAT alpha, FLOAT *a, BLASLO
   BLASLONG j;
   FLOAT *a_ptr;
   FLOAT temp;
+
+  int a;
+  int b;
 
   ix = 0;
   a_ptr = a;
@@ -70,7 +73,8 @@ int CNAME(BLASLONG m, BLASLONG n, BLASLONG dummy1, FLOAT alpha, FLOAT *a, BLASLO
         y_vec = svmla_x(pg, y_vec, temp_vec, a_vec);
         svst1(pg, y + i, y_vec);
         i += sve_size;
-        pg = SV_WHILE(i, m);
+//        pg = SV_WHILE(i, m);
+        pg = SV_WHILE(a, b);
       }
       a_ptr += lda;
       ix += inc_x;
