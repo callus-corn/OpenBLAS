@@ -66,7 +66,7 @@ int CNAME(BLASLONG m, BLASLONG n, BLASLONG dummy1, FLOAT alpha, FLOAT *a, BLASLO
     for (j = 0; j < n; j++) {
       SV_TYPE temp_vec = SV_DUP(alpha * x[ix]);
       i = 0;
-      svbool_t pg = SV_WHILE(i, m);
+      svbool_t pg = SV_WHILE(left, right);
       while (svptest_any(SV_TRUE(), pg)) {
         SV_TYPE a_vec = svld1(pg, a_ptr + i);
         SV_TYPE y_vec = svld1(pg, y + i);
