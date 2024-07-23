@@ -37,13 +37,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SV_COUNT svcntd
 #define SV_TYPE svfloat64_t
 #define SV_TRUE svptrue_b64
-#define SV_WHILE(A, B) svwhilelt_b64((uint64_t)A, (uint64_t)B)
+#define SV_WHILE(A, B) svwhilelt_b64((BLASLONG)A, (BLASLONG)B)
 #define SV_DUP svdup_f64
 #else
 #define SV_COUNT svcntw
 #define SV_TYPE svfloat32_t
 #define SV_TRUE svptrue_b32
-#define SV_WHILE(A, B) svwhilelt_b32((uint32_t)A, (uint32_t)B)
+#define SV_WHILE(A, B) svwhilelt_b32((BLASLONG)A, (BLASLONG)B)
 #define SV_DUP svdup_f32
 #endif
 
