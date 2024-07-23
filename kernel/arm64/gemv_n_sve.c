@@ -55,8 +55,8 @@ int CNAME(BLASLONG m, BLASLONG n, BLASLONG dummy1, FLOAT alpha, FLOAT *a, BLASLO
   FLOAT *a_ptr;
   FLOAT temp;
 
-  int a;
-  int b;
+  int left;
+  int right;
 
   ix = 0;
   a_ptr = a;
@@ -74,7 +74,7 @@ int CNAME(BLASLONG m, BLASLONG n, BLASLONG dummy1, FLOAT alpha, FLOAT *a, BLASLO
         svst1(pg, y + i, y_vec);
         i += sve_size;
 //        pg = SV_WHILE(i, m);
-        pg = SV_WHILE(a, b);
+        pg = SV_WHILE(left, right);
       }
       a_ptr += lda;
       ix += inc_x;
