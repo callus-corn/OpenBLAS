@@ -73,7 +73,6 @@ int CNAME(BLASLONG m, BLASLONG n, BLASLONG dummy1, FLOAT alpha, FLOAT *a, BLASLO
         y_vec = svmla_x(pg, y_vec, temp_vec, a_vec);
         svst1(pg, y + i, y_vec);
         i += sve_size;
-//        pg = SV_WHILE(i, m);
         pg = SV_WHILE(left, right);
       }
       a_ptr += lda;
