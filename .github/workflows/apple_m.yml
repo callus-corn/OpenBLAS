@@ -1,6 +1,6 @@
 name: apple m
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    if: "github.repository == 'OpenMathLib/OpenBLAS'"
+    if: "github.repository == 'callus-corn/OpenBLAS'"
     runs-on: macos-14
 
     strategy:
