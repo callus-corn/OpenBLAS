@@ -37,13 +37,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SV_COUNT svcntd
 #define SV_TYPE svfloat64_t
 #define SV_TRUE svptrue_b64
-#define SV_WHILE svwhilelt_b64
+#define SV_WHILE svwhilelt_b64_u64
 #define SV_DUP svdup_f64
 #else
 #define SV_COUNT svcntw
 #define SV_TYPE svfloat32_t
 #define SV_TRUE svptrue_b32
-#define SV_WHILE svwhilelt_b32
+#define SV_WHILE svwhilelt_b32_u32
 #define SV_DUP svdup_f32
 #endif
 
@@ -55,9 +55,6 @@ int CNAME(BLASLONG m, BLASLONG n, BLASLONG dummy1, FLOAT alpha, FLOAT *a, BLASLO
   FLOAT *a_ptr;
   FLOAT temp;
 
-  int left;
-  int right;
-
   iy = 0;
   a_ptr = a;
 
@@ -66,13 +63,13 @@ int CNAME(BLASLONG m, BLASLONG n, BLASLONG dummy1, FLOAT alpha, FLOAT *a, BLASLO
     for (j = 0; j < n; j++) {
       SV_TYPE temp_vec = SV_DUP(0.0);
       i = 0;
-      svbool_t pg = SV_WHILE(left, right);
+      svbool_t pg = SV_WHILE(i, m);
       while (svptest_any(SV_TRUE(), pg)) {
         SV_TYPE a_vec = svld1(pg, a_ptr + i);
         SV_TYPE x_vec = svld1(pg, x + i);
         temp_vec = svmla_m(pg, temp_vec, a_vec, x_vec);
         i += sve_size;
-        pg = SV_WHILE(left, right);
+        pg = SV_WHILE(i, m);
       }
       temp = svaddv(SV_TRUE(), temp_vec);
       y[iy] += alpha * temp;
