@@ -49,47 +49,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 int CNAME(BLASLONG m, BLASLONG n, BLASLONG dummy1, FLOAT alpha, FLOAT *a, BLASLONG lda, FLOAT *x, BLASLONG inc_x, FLOAT *y, BLASLONG inc_y, FLOAT *buffer)
 {
-  BLASLONG i;
-  BLASLONG ix,iy;
-  BLASLONG j;
-  FLOAT *a_ptr;
-  FLOAT temp;
-
   long left;
   long right;
 
-  ix = 0;
-  a_ptr = a;
+  svbool_t pg = SV_WHILE(left, right);
 
-  if (inc_y == 1) {
-    uint64_t sve_size = SV_COUNT();
-    for (j = 0; j < n; j++) {
-      SV_TYPE temp_vec = SV_DUP(alpha * x[ix]);
-      i = 0;
-      svbool_t pg = SV_WHILE(left, right);
-      while (svptest_any(SV_TRUE(), pg)) {
-        SV_TYPE a_vec = svld1(pg, a_ptr + i);
-        SV_TYPE y_vec = svld1(pg, y + i);
-        y_vec = svmla_x(pg, y_vec, temp_vec, a_vec);
-        svst1(pg, y + i, y_vec);
-        i += sve_size;
-        pg = SV_WHILE(left, right);
-      }
-      a_ptr += lda;
-      ix += inc_x;
-    }
-    return(0);
-  }
-
-  for (j = 0; j < n; j++) {
-    temp = alpha * x[ix];
-    iy = 0;
-    for (i = 0; i < m; i++) {
-      y[iy] += temp * a_ptr[i];
-      iy += inc_y;
-    }
-    a_ptr += lda;
-    ix += inc_x;
-  }
   return (0);
 }
