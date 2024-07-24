@@ -21,6 +21,7 @@ jobs:
         fortran: [gfortran]
         openmp: [1]
         ilp64: [0]
+        target: [char.c,  double.c,  float.c,  int.c,  long.c,  long_double.c,  long_long.c,  short.c]
         
     steps:
       - name: Checkout repository
@@ -88,11 +89,10 @@ jobs:
           echo "compression = true" >> ~/.ccache/ccache.conf
           ccache -s
 
-      - name: Build OpenBLAS
+      - name: Build ${{ matrix.target }}
         run: |
           export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
           export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
           export CC="/opt/homebrew/opt/llvm/bin/clang"
-          for i in char.c  double.c  float.c  int.c  long.c  long_double.c  long_long.c  short.c ; do ${CC} -c -march=armv8.2-a+sve $i ; done
-        continue-on-error: true
+          ${CC} -c -march=armv8.2-a+sve ${{ matrix.target }}
 
