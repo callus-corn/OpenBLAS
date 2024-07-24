@@ -1,9 +1,9 @@
 #include <arm_sve.h>
 
-int main()
+int func_short()
 {
-  long left;
-  long right;
+  short left;
+  short right;
 
   svbool_t pg = svwhilelt_b64(left, right);
 
