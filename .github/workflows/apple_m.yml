@@ -19,8 +19,6 @@ jobs:
       matrix:
         build: [make]
         fortran: [gfortran]
-        openmp: [1]
-        ilp64: [0]
         target: [char.c,  double.c,  float.c,  int.c,  long.c,  long_double.c,  long_long.c,  short.c]
         
     steps:
