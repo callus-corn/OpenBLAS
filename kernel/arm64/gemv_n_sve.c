@@ -43,7 +43,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SV_COUNT svcntw
 #define SV_TYPE svfloat32_t
 #define SV_TRUE svptrue_b32
-#define SV_WHILE svwhilelt_b32_u64
+#define SV_WHILE svwhilelt_b32_u32
 #define SV_DUP svdup_f32
 #endif
 
